@@ -1,8 +1,9 @@
 /*
  * Run the hello world program on your system.
  */
+#include <stdio.h>
 
-main()
+int main()
 {
 	printf("hello, world\n");
 }
