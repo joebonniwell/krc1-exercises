@@ -7,10 +7,15 @@
 #define YES 1
 #define NO  0
 
+#define MAX_HIST 10
+
+void countWordLength(int hist[], int wordLength);
+void printBars(int numBars);
+
 int main()
 {
 	int c, nw, inword, lastClear, currentWordLength;
-	int hist[11] = {0};
+	int hist[MAX_HIST] = {0};
 
 	lastClear = YES;
 	inword = NO;
@@ -25,7 +30,7 @@ int main()
 		} else if (c == ' ' || c == '\n' || c == '\t') {
 				inword = NO;
 				lastClear = YES;
-				hist[(currentWordLength > 10 ? 10 : currentWordLength - 1)]++;
+				countWordLength(hist, currentWordLength);
 		} else {
 			lastClear = NO;
 			if (inword == YES) {
@@ -36,10 +41,22 @@ int main()
 
 	if (inword == YES) {
 		// Count the last word
-		hist[(currentWordLength > 10 ? 10 : currentWordLength - 1)]++;
+		countWordLength(hist, currentWordLength);
 	}
 
-	for (int i = 0; i < 11; i++) {
-		printf("%2.0d: (%d)\n", i + 1, hist[i]);
+	for (int i = 0; i < MAX_HIST; i++) {
+		printf("%2.0d: ", i + 1);
+		printBars(hist[i]);
+		printf("(%d)\n", hist[i]);
+	}
+}
+
+void countWordLength(int hist[], int wordLength) {
+	hist[(wordLength > MAX_HIST ? MAX_HIST : wordLength - 1)]++;
+}
+
+void printBars(int numBars) {
+	for (int i = 0; i < numBars; i++) {
+		printf("*");
 	}
 }
